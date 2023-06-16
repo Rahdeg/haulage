@@ -1,7 +1,4 @@
 'use client'
-import Layout from 'antd/es/layout/layout'
-import Layoutdashboard from '../../components/layout/dashboard'
-
 import { Inter } from 'next/font/google'
 import Wrapper from '@/app/components/layout/Wrapper'
 
@@ -16,7 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
     <body className={inter.className}>
-    <div className=''>
+    <div className='h-screen overflow-y-hidden'>
     <Wrapper>
     {children}
     </Wrapper>

@@ -47,7 +47,7 @@ const Sidebar = () => {
         <div className="demo-logo-vertical" />
         <div className='flex flex-col gap-5 items-center justify-center'>
      <Image src="http://esthelhaulage.com//view/signup/img/icon_img.png" width={170} height={170} alt='logo'/>
-     <h1 className={collapsed ?  "hidden" : "text-white font-bold text-base"}>Esthel Haulage Services</h1>
+     <h1 className={collapsed ?  "hidden" : " text-black font-bold text-base"}>Esthel Haulage Services</h1>
      </div>
         <Menu
           theme="light"

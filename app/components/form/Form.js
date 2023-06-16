@@ -1,5 +1,4 @@
 'use client'
-import React, { useState } from 'react';
 import { Button, DatePicker, Form, Input, Radio, Select, Upload } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { PlusOutlined } from '@ant-design/icons';
@@ -25,7 +24,7 @@ const Forms = () => {
     <Form
       layout='vertical'
       style={{ maxWidth: 1200 }}
-      className='w-full'
+      className='w-full mb-14'
       onFinish={onFinish}
     >
     <div className='flex flex-col md:flex-row items-center justify-center gap-5 w-full'>
@@ -115,7 +114,6 @@ const Forms = () => {
             </div>
           </Upload>
         </Form.Item>
-     
       <Form.Item className='flex items-center justify-center w-full' >
         <Button type="primary" htmlType="submit" className="login-form-button bg-blue-700 w-full  ">Submit</Button>
       </Form.Item>

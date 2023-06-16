@@ -20,7 +20,7 @@ const CreateInvoice = () => {
           className=' text-base'
         >
         <div className='flex flex-col'>
-        <p className=' text-xl font-bold text-black mb-4'> Create Invoice</p>
+        <p className=' text-xl font-bold text-black mb-2'> Create Invoice</p>
         <Forms/>
         </div>
        

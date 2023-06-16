@@ -13,16 +13,18 @@ const AdminHeader = () => {
 
     return (
         <Header className=" bg-white">
-            <span className="welcome_note" style={welcome}> 👋 Hi! Raheem, You&apos;re logged in as admin </span>
+            <span className=" hidden md:inline-block" style={welcome}> 👋 Hi! Raheem You&apos;re logged in as User </span>
+           <p className=' md:hidden inline-block font-bold'>👋  Raheem</p>
             <Switch 
                 style={{
                     objectFit: "cover",
                     borderRadius: "16px",
                     cursor: "pointer",
                     float: 'right',
-                    marginTop: '15px',
+                    marginTop: '22px',
                     background: '#242164',
                 }}
+                className=' '
                 onChange={Logout}
             />
         </Header>
