@@ -1,4 +1,3 @@
-'use client'
 import { Inter } from 'next/font/google'
 import Wrapper from '@/app/components/layout/Wrapper'
 
