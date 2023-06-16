@@ -15,7 +15,7 @@ export default function Home() {
      <h1 className=' text-blue-950 font-extrabold text-base'>Company Haulage Services</h1>
      </div>
     
-     <LoginInput setauth={setAuth}/>
+     <LoginInput/>
     
      
     </main>

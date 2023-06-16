@@ -2,12 +2,24 @@
 import '../../globals.css'
 import React,{ useEffect, useState } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { ToastContainer, toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import { useRouter } from 'next/navigation';
+import axios, { AxiosError} from 'axios';
+
+
+
+const successMsg = (message) => toast.success(message);
+const errorMsg = (message) => toast.error(message);
+
 
 const LoginInput = ({setauth}) => {
   const [modal2Open, setModal2Open] = useState(false);
-  const router = useRouter();
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
   const localStorageAuth = typeof window !== 'undefined' && window.localStorage.getItem('auth');
 
   useEffect(() => {
@@ -18,20 +30,67 @@ const LoginInput = ({setauth}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onFinish = (values) => {
-    console.log('Received values of form2: ', values);
-    setauth(true);
-    window.localStorage.setItem("auth", "true");
-    router.push('/dashboard')
+  const onFinish =async (values) => {
+     setLoading(true)
+        axios({
+            method: "POST",
+            url: `${baseUrl}api/v1/users/signIn`,
+            data: values
+        }).then((response) => {
+            const {message,user } = response.data;
+            setLoading(false)
+            successMsg(message)
+            window.localStorage.setItem('auth', 'true')
+            window.localStorage.setItem('ts_user', JSON.stringify(user))
+            setTimeout(() => {
+                router.push('/dashboard')
+            }, 2000);
+        }).catch((error) => {
+            setLoading(false)
+            if (axios.isAxiosError(error))  {
+              // Access to config, request, and response error
+              const { message, status_code } = error.response?.data
+              if(status_code === 500){
+                errorMsg("Something went wrong, please try again later")
+              }else{
+                errorMsg(message)
+              }
+            } else {
+              // Just a stock error
+            }
+        })
   };
 
   const onRegister = (values) => {
-    console.log('Received values of form: ', values);
-    setModal2Open(false)
+    setLoading(true)
+        axios({
+            method: "POST",
+            url: `${baseUrl}api/v1/users/signUp`,
+            data: values
+        }).then((response) => {
+            const {message,user } = response.data;
+            setLoading(false)
+            successMsg(message)
+        }).catch((error) => {
+            setLoading(false)
+            if (axios.isAxiosError(error))  {
+              // Access to config, request, and response error
+              const { message, status_code } = error.response?.data
+              if(status_code === 500){
+                errorMsg("Something went wrong, please try again later")
+              }else{
+                errorMsg(message)
+              }
+            } else {
+              // Just a stock error
+            }
+        }).finally(setModal2Open(false))
+    
   };
 
   return (
     <div className='flex items-center justify-center w-full'>
+    <ToastContainer />
     <Form
     name="normal_login"
     className="login-form  w-full py-4"
@@ -39,11 +98,11 @@ const LoginInput = ({setauth}) => {
     onFinish={onFinish}
   >
     <Form.Item
-      name="username"
-      rules={[{ required: true, message: 'Please input your Username!' }]}
+      name="email"
+      rules={[{ required: true, message: 'Please input your email!' }]}
       className=''
     >
-      <Input className='' prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+      <Input className='' prefix={<UserOutlined className="site-form-item-icon" />} placeholder="email" />
     </Form.Item>
     <Form.Item
       name="password"
@@ -56,9 +115,9 @@ const LoginInput = ({setauth}) => {
       />
     </Form.Item>
     <Form.Item>
-      <Form.Item name="remember" valuePropName="checked" noStyle>
+      
         <Checkbox>Remember me</Checkbox>
-      </Form.Item>
+      
 
       <a className="login-form-forgot" href="">
         Forgot password
@@ -66,7 +125,7 @@ const LoginInput = ({setauth}) => {
     </Form.Item>
 
     <Form.Item>
-      <Button type="primary" htmlType="submit" className="login-form-button bg-blue-700">
+      <Button type="primary" htmlType="submit" className="login-form-button bg-blue-700" loading={loading}>
         Log in
       </Button>
     <p onClick={() => setModal2Open(true)} className='cursor-pointer'>register now!</p>
@@ -103,9 +162,17 @@ onFinish={onRegister}
 <Input placeholder="confirm password" />
 </Form.Item>
 </div>
+<div className=' flex flex-col md:flex-row items-center justify-center gap-5 w-full'>
+<Form.Item label="Phone Number" name='phoneNumber' className='w-full'>
+<Input placeholder="input number" />
+</Form.Item>
+<Form.Item label="Location" name='location' className='w-full'>
+<Input placeholder="input location" />
+</Form.Item>
+</div>
 
 <Form.Item className='flex items-center justify-center w-full' >
-  <Button type="primary" htmlType="submit" className="login-form-button bg-blue-700 w-full  ">Enter expenses</Button>
+  <Button type="primary" htmlType="submit" className="login-form-button bg-blue-700 w-full  " loading={loading}>Enter expenses</Button>
 </Form.Item>
 </Form>
 </div>

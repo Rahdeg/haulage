@@ -1,19 +1,24 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Layout, Switch, notification } from 'antd';
 const { Header } = Layout;
 
 
 const AdminHeader = () => {
+    const localUser = JSON.parse(typeof window !== 'undefined' && window.localStorage.getItem('ts_user'))
+    
 
     const Logout =()=>{
         window.localStorage.removeItem('auth');
+        window.localStorage.removeItem('ts_user')
         window.location.href = "/"
       }
 
+      
+
     return (
         <Header className=" bg-white">
-            <span className=" hidden md:inline-block" style={welcome}> 👋 Hi! Raheem You&apos;re logged in as User </span>
+            <span className=" hidden md:inline-block" style={welcome}> 👋 Hi! {localUser.name} You&apos;re logged in as {localUser.role} </span>
            <p className=' md:hidden inline-block font-bold'>👋  Raheem</p>
             <Switch 
                 style={{
