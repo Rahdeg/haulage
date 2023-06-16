@@ -46,8 +46,9 @@ const Sidebar = () => {
         <Sider trigger={null} collapsible collapsed={collapsed} className='sidebar'>
         <div className="demo-logo-vertical" />
         <div className='flex flex-col gap-5 items-center justify-center'>
-     <Image src="http://esthelhaulage.com//view/signup/img/icon_img.png" width={170} height={170} alt='logo'/>
-     <h1 className={collapsed ?  "hidden" : " text-black font-bold text-base"}>Esthel Haulage Services</h1>
+         { /*<Image src="http://esthelhaulage.com//view/signup/img/icon_img.png" width={120} height={120} alt='logo'/>*/}
+    <p>COMPANY LOGO</p>  
+     <h1 className={collapsed ?  "hidden" : " text-black font-semibold text-base"}>Company Haulage Services</h1>
      </div>
         <Menu
           theme="light"
