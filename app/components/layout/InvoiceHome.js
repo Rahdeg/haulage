@@ -2,6 +2,7 @@
 import React from 'react'
 import { Layout,theme,Button,Space } from 'antd';
 import Tabledata from '../table/table';
+import Link from 'next/link';
 const { Content } = Layout;
 
 
@@ -23,7 +24,10 @@ const InvoiceHome = () => {
        <div className=' flex flex-col gap-2'>
        <p className=' text-xl font-bold text-black'> Invoice Records</p>
        <Space wrap>
+       <Link href='/dashboard/Invoice/create'>
        <Button type="default" className=' bg-blue-500 text-white'>create new invoice</Button>
+       </Link>
+       
        </Space>
        </div>
        <div className='flex items-center justify-center gap-2 mb-6'>
