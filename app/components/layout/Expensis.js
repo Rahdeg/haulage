@@ -2,23 +2,69 @@
 import React, { useState } from 'react'
 import { Button, Layout,Space,theme,Modal, Form, DatePicker, Input } from 'antd';
 import Tabledata from '../table/table';
+import { ToastContainer, toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 import TextArea from 'antd/es/input/TextArea';
+import { useRouter } from 'next/navigation';
+import axios, { AxiosError} from 'axios';
 const { Content } = Layout;
 
 
+const successMsg = (message) => toast.success(message);
+const errorMsg = (message) => toast.error(message);
+
 const Expensis = () => {
   const [modal2Open, setModal2Open] = useState(false);
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
   const [form] = Form.useForm();
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  const localUser = JSON.parse(typeof window !== 'undefined' && window.localStorage.getItem('ts_user'))
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
-    setModal2Open(false)
+    setLoading(true)
+    axios({
+        method: "POST",
+        url: `${baseUrl}api/v1/users/${localUser._id}/expenses`,
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${localUser.token}`
+      },
+        data: values
+    }).then((response) => {
+        const {message,expenses } = response.data;
+        setLoading(false)
+        successMsg(message)
+        window.localStorage.setItem('ts_expensis', JSON.stringify(expenses))
+        setTimeout(() => {
+          setModal2Open(false)
+        }, 1000);
+        router.refresh();
+    }).catch((error) => {
+        setLoading(false)
+        if (axios.isAxiosError(error))  {
+          // Access to config, request, and response error
+          const { message, status_code } = error.response?.data
+          if(status_code === 500){
+            errorMsg("Something went wrong, please try again later")
+          }else{
+            errorMsg(message)
+          }
+        } else {
+          // Just a stock error
+        }
+    }).finally(setModal2Open(false))
+
+    
   };
 
     const {
         token: { colorBgContainer },
       } = theme.useToken();
 
+      
 
   return (
     <Content
@@ -30,6 +76,7 @@ const Expensis = () => {
           }}
           className=' text-base'
         >
+        <ToastContainer />
         <div className='flex flex-col'>
        <div className=' flex flex-col gap-2'>
        <p className=' text-xl font-bold text-black'> Expenses Records</p>
@@ -80,7 +127,7 @@ const Expensis = () => {
   </Form.Item>
    
    <Form.Item className='flex items-center justify-center w-full' >
-        <Button type="primary" htmlType="submit" className="login-form-button bg-blue-700 w-full  ">Enter expenses</Button>
+        <Button type="primary" htmlType="submit" className="login-form-button bg-blue-700 w-full" loading={loading}>Enter expenses</Button>
       </Form.Item>
     </Form>
       </div>

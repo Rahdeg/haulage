@@ -3,32 +3,32 @@ import 'antd/dist/antd'
 import { Table } from 'antd';
 
 
+const localExpenses = JSON.parse(typeof window !== 'undefined' && window.localStorage.getItem('ts_expensis'))
+const localUser = JSON.parse(typeof window !== 'undefined' && window.localStorage.getItem('ts_user'))
+
 const columns = [
   {
-    title: 'Full Name',
+    title: 'ID',
     width: 100,
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'id',
+    key: 'id',
     fixed: 'left',
   },
   {
-    title: 'Age',
+    title: 'Date',
     width: 100,
-    dataIndex: 'age',
-    key: 'age',
+    dataIndex: 'date',
+    key: 'date',
     fixed: 'left',
     sorter: true,
   },
-  { title: 'Column 1', dataIndex: 'address', key: '1' },
-  { title: 'Column 2', dataIndex: 'address', key: '2' },
-  { title: 'Column 3', dataIndex: 'address', key: '3' },
-  { title: 'Column 4', dataIndex: 'address', key: '4' },
-  { title: 'Column 5', dataIndex: 'address', key: '5' },
-  { title: 'Column 6', dataIndex: 'address', key: '6' },
-  { title: 'Column 7', dataIndex: 'address', key: '7' },
-  { title: 'Column 8', dataIndex: 'address', key: '8' },
+  { title: 'Details', dataIndex: 'details', key: '1' },
+  { title: 'Amount', dataIndex: 'amount', key: '2' },
+  { title: 'Operator', dataIndex: 'operator', key: '3' },
+  { title: 'Driver', dataIndex: 'driver', key: '4' },
+  { title: 'Entered By', dataIndex: 'entered', key: '5' },
   {
-    title: 'Action',
+    title: 'Last editted',
     key: 'operation',
     fixed: 'right',
     width: 100,
@@ -39,15 +39,13 @@ const columns = [
 const data = [
   {
     key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 40,
-    address: 'London Park',
+    id: '1',
+    date: localExpenses.date,
+    details: localExpenses.details,
+    amount: localExpenses.amount,
+    operator: localExpenses.operator,
+    driver: localExpenses.driver,
+    entered: localUser.name,
   },
 ];
 
