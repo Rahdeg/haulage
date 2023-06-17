@@ -40,12 +40,12 @@ const data = [
   {
     key: '1',
     id: '1',
-    date: localExpenses.date,
-    details: localExpenses.details,
-    amount: localExpenses.amount,
-    operator: localExpenses.operator,
-    driver: localExpenses.driver,
-    entered: localUser.name,
+    date: localExpenses?.date ? localExpenses.date :'' ,
+    details: localExpenses?.details ? localExpenses.details:  '',
+    amount: localExpenses?.amount ? localExpenses.amount : '',
+    operator: localExpenses?.operator ? localExpenses.operator :  '',
+    driver: localExpenses?.driver ? localExpenses.driver : '',
+    entered: localUser.name || '',
   },
 ];
 
