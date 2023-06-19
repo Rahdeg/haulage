@@ -55,7 +55,7 @@ const Expensis = () => {
         } else {
           // Just a stock error
         }
-    }).finally(setModal2Open(false))
+    })
 
     
   };
@@ -88,7 +88,7 @@ const Expensis = () => {
           <p className=' text-blue-500'>Search Expensis</p>
           <p className='text-blue-500 border-l-2 pl-2 border-black'>Print View</p>
        </div>
-       <div className=''>
+       <div className=' mb-14'>
        <Tabledata/>
        </div>
        <Modal

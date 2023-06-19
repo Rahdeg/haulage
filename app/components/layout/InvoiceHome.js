@@ -34,7 +34,7 @@ const InvoiceHome = () => {
           <p className=' text-blue-500'>Search Invoice</p>
           <p className='text-blue-500 border-l-2 pl-2 border-black'>Print View</p>
        </div>
-       <div className=''>
+       <div className='mb-14'>
        <Tabledata/>
        </div>
        
